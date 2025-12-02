@@ -1,5 +1,5 @@
-import { CouponDashboard } from "../features/coupon/ui/CouponDashboard";
-import { ProductDashboard } from "../features/product/ui/ProductDashboard";
+import { CouponDashboard } from "../widgets/coupon/ui/CouponDashboard";
+import { ProductDashboard } from "../widgets/product/ui/ProductDashboard";
 import { Coupon, ProductForm, ProductWithUI } from "../types";
 
 export function AdminPage({

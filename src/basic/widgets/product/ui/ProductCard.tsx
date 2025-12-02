@@ -1,5 +1,5 @@
-import { ProductWithUI } from "../types";
-import { IconImage } from "./icons";
+import { ProductWithUI } from "../../../types";
+import { IconImage } from "../../../components/icons";
 
 export function ProductCard({
   product,

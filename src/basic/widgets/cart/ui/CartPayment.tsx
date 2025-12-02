@@ -1,4 +1,4 @@
-export function PaymentSection({
+export function CartPayment({
   totals,
   completeOrder,
 }: {

@@ -1,8 +1,8 @@
-import { CartItem } from "../types";
-import { CartItemRow } from "./CartItemRow";
-import { IconCart } from "./icons";
+import { CartItem } from "../../../types";
+import { CartListItem } from "./CartListItem";
+import { IconCart } from "../../../components/icons";
 
-export function CartSection({
+export function CartList({
   cart,
   removeFromCart,
   updateQuantity,
@@ -28,7 +28,7 @@ export function CartSection({
         <div className="space-y-3">
           {cart.map((item) => {
             return (
-              <CartItemRow
+              <CartListItem
                 key={item.product.id}
                 item={item}
                 removeFromCart={removeFromCart}

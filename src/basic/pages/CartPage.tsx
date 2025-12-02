@@ -1,8 +1,8 @@
-import { ProductSection } from "../components/ProductSection";
+import { ProductList } from "../widgets/product/ui/ProductList";
 import { CartItem, Coupon, ProductWithUI } from "../types";
-import { CouponSection } from "../components/CouponSection";
-import { CartSection } from "../components/CartSection";
-import { PaymentSection } from "../components/PaymentSection";
+import { CouponSelector } from "../widgets/coupon/ui/CouponSelector";
+import { CartList } from "../widgets/cart/ui/CartList";
+import { CartPayment } from "../widgets/cart/ui/CartPayment";
 
 export function CartPage({
   products,
@@ -46,7 +46,7 @@ export function CartPage({
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3">
         {/* 상품 목록 */}
-        <ProductSection
+        <ProductList
           products={products}
           filteredProducts={filteredProducts}
           debouncedSearchTerm={debouncedSearchTerm}
@@ -58,7 +58,7 @@ export function CartPage({
 
       <div className="lg:col-span-1">
         <div className="sticky top-24 space-y-4">
-          <CartSection
+          <CartList
             cart={cart}
             removeFromCart={removeFromCart}
             updateQuantity={updateQuantity}
@@ -67,13 +67,13 @@ export function CartPage({
 
           {cart.length > 0 && (
             <>
-              <CouponSection
+              <CouponSelector
                 coupons={coupons}
                 selectedCoupon={selectedCoupon}
                 setSelectedCoupon={setSelectedCoupon}
                 applyCoupon={applyCoupon}
               />
-              <PaymentSection totals={totals} completeOrder={completeOrder} />
+              <CartPayment totals={totals} completeOrder={completeOrder} />
             </>
           )}
         </div>

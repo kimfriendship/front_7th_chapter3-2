@@ -1,7 +1,7 @@
-import { CartItem } from "../types";
-import { IconClose } from "./icons";
+import { CartItem } from "../../../types";
+import { IconClose } from "../../../components/icons";
 
-export function CartItemRow({
+export function CartListItem({
   item,
   removeFromCart,
   updateQuantity,

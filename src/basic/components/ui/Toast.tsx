@@ -1,4 +1,5 @@
 import { Notification } from "../../types";
+import { IconClose } from "../icons";
 
 export function Toast({
   setNotifications,
@@ -22,19 +23,7 @@ export function Toast({
         onClick={() => setNotifications(notification)}
         className="text-white hover:text-gray-200"
       >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <IconClose className="w-4 h-4" />
       </button>
     </div>
   );

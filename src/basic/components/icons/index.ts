@@ -13,3 +13,5 @@
 export { IconCart } from "./IconCart";
 export { IconImage } from "./IconImage";
 export { IconClose } from "./IconClose";
+export { IconPlus } from "./IconPlus";
+export { IconTrash } from "./IconTrash";

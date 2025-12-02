@@ -1,7 +1,7 @@
 import { ProductWithUI } from "../types";
 import { ProductCard } from "./ProductCard";
 
-export function ProductList({
+export function ProductSection({
   products,
   filteredProducts,
   debouncedSearchTerm,

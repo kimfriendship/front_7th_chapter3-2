@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { Header } from "./components/Header";
-import {
+import type {
   CartItem,
   Coupon,
   Product,
@@ -11,6 +11,7 @@ import {
 import { AdminPage } from "./components/AdminPage";
 import { CartPage } from "./components/CartPage";
 import { initialCoupons, initialProducts } from "./constants";
+import { Toast } from "./components/Toast";
 
 const App = () => {
   const [products, setProducts] = useState<ProductWithUI[]>(() => {
@@ -420,41 +421,14 @@ const App = () => {
     <div className="min-h-screen bg-gray-50">
       {notifications.length > 0 && (
         <div className="fixed top-20 right-4 z-50 space-y-2 max-w-sm">
-          {notifications.map((notif) => (
-            <div
-              key={notif.id}
-              className={`p-4 rounded-md shadow-md text-white flex justify-between items-center ${
-                notif.type === "error"
-                  ? "bg-red-600"
-                  : notif.type === "warning"
-                  ? "bg-yellow-600"
-                  : "bg-green-600"
-              }`}
-            >
-              <span className="mr-2">{notif.message}</span>
-              <button
-                onClick={() =>
-                  setNotifications((prev) =>
-                    prev.filter((n) => n.id !== notif.id)
-                  )
-                }
-                className="text-white hover:text-gray-200"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
+          {notifications.map((notification) => (
+            <Toast
+              key={notification.id}
+              notification={notification}
+              setNotifications={(noti: Notification) =>
+                setNotifications((prev) => prev.filter((n) => n.id !== noti.id))
+              }
+            />
           ))}
         </div>
       )}

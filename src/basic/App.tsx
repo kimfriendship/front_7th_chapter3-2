@@ -31,10 +31,7 @@ const App = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [showCouponForm, setShowCouponForm] = useState(false);
-  const [activeTab, setActiveTab] = useState<"products" | "coupons">(
-    "products"
-  );
+
   const [showProductForm, setShowProductForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -47,13 +44,6 @@ const App = () => {
     stock: 0,
     description: "",
     discounts: [] as Array<{ quantity: number; rate: number }>,
-  });
-
-  const [couponForm, setCouponForm] = useState({
-    name: "",
-    code: "",
-    discountType: "amount" as "amount" | "percentage",
-    discountValue: 0,
   });
 
   const addNotification = useCallback(
@@ -260,18 +250,6 @@ const App = () => {
     setShowProductForm(false);
   };
 
-  const handleCouponSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    addCoupon(couponForm);
-    setCouponForm({
-      name: "",
-      code: "",
-      discountType: "amount",
-      discountValue: 0,
-    });
-    setShowCouponForm(false);
-  };
-
   const startEditProduct = (product: ProductWithUI) => {
     setEditingProduct(product.id);
     setProductForm({
@@ -326,27 +304,21 @@ const App = () => {
       <main className="max-w-7xl mx-auto px-4 py-8">
         {isAdmin ? (
           <AdminPage
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
             products={products}
             setEditingProduct={(id: string | null) => setEditingProduct(id)}
             setProductForm={(product: ProductForm) => setProductForm(product)}
             setShowProductForm={setShowProductForm}
             showProductForm={showProductForm}
             coupons={coupons}
+            addCoupon={addCoupon}
             deleteCoupon={(code: string) => deleteCoupon(code)}
-            setShowCouponForm={setShowCouponForm}
-            showCouponForm={showCouponForm}
-            setCouponForm={setCouponForm}
             handleProductSubmit={handleProductSubmit}
-            handleCouponSubmit={handleCouponSubmit}
             addNotification={addNotification}
             formatPrice={formatPrice}
             startEditProduct={startEditProduct}
             deleteProduct={deleteProduct}
             editingProduct={editingProduct}
             productForm={productForm}
-            couponForm={couponForm}
           />
         ) : (
           <CartPage

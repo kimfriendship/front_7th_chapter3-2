@@ -1,44 +1,34 @@
 import { CouponDashboard } from "../widgets/coupon/ui/CouponDashboard";
 import { ProductDashboard } from "../widgets/product/ui/ProductDashboard";
 import { Coupon, ProductForm, ProductWithUI } from "../types";
+import { useState } from "react";
 
 export function AdminPage({
-  activeTab,
-  setActiveTab,
   products,
   setEditingProduct,
   setProductForm,
   setShowProductForm,
   showProductForm,
   coupons,
+  addCoupon,
   deleteCoupon,
-  setShowCouponForm,
-  showCouponForm,
-  setCouponForm,
   handleProductSubmit,
-  handleCouponSubmit,
   addNotification,
   formatPrice,
   startEditProduct,
   deleteProduct,
   editingProduct,
   productForm,
-  couponForm,
 }: {
-  activeTab: "products" | "coupons";
-  setActiveTab: (tab: "products" | "coupons") => void;
   products: ProductWithUI[];
   setEditingProduct: (id: string | null) => void;
   setProductForm: (product: ProductForm) => void;
   setShowProductForm: (show: boolean) => void;
   showProductForm: boolean;
   coupons: Coupon[];
+  addCoupon: (coupon: Coupon) => void;
   deleteCoupon: (code: string) => void;
-  setShowCouponForm: (show: boolean) => void;
-  showCouponForm: boolean;
-  setCouponForm: (coupon: Coupon) => void;
   handleProductSubmit: (e: React.FormEvent) => void;
-  handleCouponSubmit: (e: React.FormEvent) => void;
   addNotification: (
     message: string,
     type: "error" | "success" | "warning"
@@ -48,8 +38,11 @@ export function AdminPage({
   deleteProduct: (productId: string) => void;
   editingProduct: string | null;
   productForm: ProductForm;
-  couponForm: Coupon;
 }) {
+  const [activeTab, setActiveTab] = useState<"products" | "coupons">(
+    "products"
+  );
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-8">
@@ -99,12 +92,8 @@ export function AdminPage({
       ) : (
         <CouponDashboard
           coupons={coupons}
+          addCoupon={addCoupon}
           deleteCoupon={deleteCoupon}
-          setShowCouponForm={setShowCouponForm}
-          showCouponForm={showCouponForm}
-          handleCouponSubmit={handleCouponSubmit}
-          couponForm={couponForm}
-          setCouponForm={setCouponForm}
           addNotification={addNotification}
         />
       )}

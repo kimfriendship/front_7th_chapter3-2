@@ -1,5 +1,5 @@
-import { CouponDashboard } from "../widgets/admin/ui/CouponDashboard";
-import { ProductDashboard } from "../widgets/admin/ui/ProductDashboard";
+import { CouponDashboard } from "../components/CouponDashboard";
+import { ProductDashboard } from "../components/ProductDashboard";
 import { Coupon, ProductForm, ProductWithUI } from "../types";
 import { useState } from "react";
 

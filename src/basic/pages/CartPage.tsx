@@ -1,9 +1,9 @@
 import { CartItem, Coupon, Product, ProductWithUI } from "../types";
-import { CartList } from "../widgets/cart/ui/CartList";
-import { CouponSelector } from "../widgets/coupon/ui/CouponSelector";
-import { CartPayment } from "../widgets/cart/ui/CartPayment";
-import { calculateCartTotal } from "../features/calculate-price/model/calculateCartTotal";
-import { ProductCard } from "../entities/product/ui/ProductCard";
+import { CartList } from "../components/CartList";
+import { CouponSelector } from "../components/CouponSelector";
+import { CartPayment } from "../components/CartPayment";
+import { calculateCartTotal } from "../models/calculateCartTotal";
+import { ProductCard } from "../components/ProductCard";
 
 export function CartPage({
   products,

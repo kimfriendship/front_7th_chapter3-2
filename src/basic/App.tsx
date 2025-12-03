@@ -4,11 +4,11 @@ import type { Product, Notification } from "./types";
 import { AdminPage } from "./pages/AdminPage";
 import { CartPage } from "./pages/CartPage";
 import { Toast } from "./components/ui/Toast";
-import { useCart } from "./features/control-cart/model/useCart";
-import { useProduct } from "./features/control-product/model/useProduct";
-import { useCoupon } from "./features/control-coupon/model/useCoupon";
-import { CartCounter } from "./entities/cart/ui/CartCounter";
-import { ProductSearchBar } from "./entities/product/ui/ProductSearchBar";
+import { useCart } from "./hooks/useCart";
+import { useProduct } from "./hooks/useProduct";
+import { useCoupon } from "./hooks/useCoupon";
+import { CartCounter } from "./components/CartCounter";
+import { ProductSearchBar } from "./components/ProductSearchBar";
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -77,12 +77,7 @@ const App = () => {
     return remaining;
   };
 
-  const [totalItemCount, setTotalItemCount] = useState(0);
-
-  useEffect(() => {
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    setTotalItemCount(count);
-  }, [cart]);
+  const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(products));

@@ -1,5 +1,5 @@
 import { ProductList } from "../widgets/product/ui/ProductList";
-import { CartItem, Coupon, ProductWithUI } from "../types";
+import { CartItem, Coupon, Product, ProductWithUI } from "../types";
 import { CouponSelector } from "../widgets/coupon/ui/CouponSelector";
 import { CartList } from "../widgets/cart/ui/CartList";
 import { CartPayment } from "../widgets/cart/ui/CartPayment";
@@ -40,7 +40,7 @@ export function CartPage({
   completeOrder: () => void;
   calculateItemTotal: (item: CartItem) => number;
   removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  updateQuantity: (product: Product, newQuantity: number) => void;
 }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

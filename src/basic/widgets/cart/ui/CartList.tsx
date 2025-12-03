@@ -1,5 +1,5 @@
-import { CartItem } from "../../../types";
-import { CartListItem } from "./CartListItem";
+import { CartItem, Product } from "../../../types";
+import { CartListItem } from "../../../features/control-cart/ui/CartListItem";
 import { IconCart } from "../../../components/icons";
 
 export function CartList({
@@ -10,7 +10,7 @@ export function CartList({
 }: {
   cart: CartItem[];
   removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  updateQuantity: (product: Product, newQuantity: number) => void;
   calculateItemTotal: (item: CartItem) => number;
 }) {
   return (

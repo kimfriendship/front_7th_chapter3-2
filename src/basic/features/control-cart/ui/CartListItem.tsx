@@ -1,4 +1,4 @@
-import { CartItem } from "../../../types";
+import { CartItem, Product } from "../../../types";
 import { IconClose } from "../../../components/icons";
 
 export function CartListItem({
@@ -9,7 +9,7 @@ export function CartListItem({
 }: {
   item: CartItem;
   removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  updateQuantity: (product: Product, newQuantity: number) => void;
   calculateItemTotal: (item: CartItem) => number;
 }) {
   const itemTotal = calculateItemTotal(item);
@@ -35,7 +35,7 @@ export function CartListItem({
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <button
-            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+            onClick={() => updateQuantity(item.product, item.quantity - 1)}
             className="w-6 h-6 rounded border border-gray-300 flex items-center justify-center hover:bg-gray-100"
           >
             <span className="text-xs">−</span>
@@ -44,7 +44,7 @@ export function CartListItem({
             {item.quantity}
           </span>
           <button
-            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+            onClick={() => updateQuantity(item.product, item.quantity + 1)}
             className="w-6 h-6 rounded border border-gray-300 flex items-center justify-center hover:bg-gray-100"
           >
             <span className="text-xs">+</span>

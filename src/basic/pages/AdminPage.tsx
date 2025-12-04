@@ -61,9 +61,9 @@ export function AdminPage({
         <ProductDashboard
           products={products}
           deleteProduct={deleteProduct}
-          notify={notify}
           updateProduct={updateProduct}
           addProduct={addProduct}
+          notify={notify}
         />
       ) : (
         <CouponDashboard

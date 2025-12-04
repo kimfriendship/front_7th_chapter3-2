@@ -1,6 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { ProductWithUI } from "../types";
 import { initialProducts } from "../constants";
+import { useDebounce } from "../utils/hooks/useDebounce";
 
 export const useProduct = ({
   addNotification,
@@ -55,7 +56,7 @@ export const useProduct = ({
   );
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const filteredProducts = debouncedSearchTerm
     ? products.filter(
@@ -69,13 +70,6 @@ export const useProduct = ({
               .includes(debouncedSearchTerm.toLowerCase()))
       )
     : products;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
 
   return {
     products,

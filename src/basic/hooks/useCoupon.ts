@@ -3,31 +3,27 @@ import { CartItem, Coupon } from "../types";
 import { initialCoupons } from "../constants";
 import { useLocalStorage } from "../utils/hooks/useLocalStorage";
 import { calculateCartTotal } from "../models/calculateCartTotal";
+import { useToast } from "../utils/hooks/useToast";
 
-export const useCoupon = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess: (message: string) => void;
-  onError: (message: string) => void;
-}) => {
+export const useCoupon = () => {
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
   const [coupons, setCoupons] = useLocalStorage<Coupon[]>(
     "coupons",
     initialCoupons
   );
+  const { notify } = useToast();
 
   const addCoupon = useCallback(
     (newCoupon: Coupon) => {
       const existingCoupon = coupons.find((c) => c.code === newCoupon.code);
       if (existingCoupon) {
-        onError("이미 존재하는 쿠폰 코드입니다.");
+        notify("이미 존재하는 쿠폰 코드입니다.", "error");
         return;
       }
       setCoupons((prev) => [...prev, newCoupon]);
-      onSuccess("쿠폰이 추가되었습니다.");
+      notify("쿠폰이 추가되었습니다.", "success");
     },
-    [coupons, onError, onSuccess, setCoupons]
+    [coupons, notify, setCoupons]
   );
 
   const deleteCoupon = useCallback(
@@ -36,9 +32,9 @@ export const useCoupon = ({
       if (selectedCoupon?.code === couponCode) {
         setSelectedCoupon(null);
       }
-      onSuccess("쿠폰이 삭제되었습니다.");
+      notify("쿠폰이 삭제되었습니다.", "success");
     },
-    [selectedCoupon, onSuccess, setCoupons]
+    [selectedCoupon, notify, setCoupons]
   );
 
   const applyCoupon = useCallback(
@@ -49,14 +45,17 @@ export const useCoupon = ({
       ).totalAfterDiscount;
 
       if (currentTotal < 10000 && coupon.discountType === "percentage") {
-        onError("percentage 쿠폰은 10,000원 이상 구매 시 사용 가능합니다.");
+        notify(
+          "percentage 쿠폰은 10,000원 이상 구매 시 사용 가능합니다.",
+          "error"
+        );
         return;
       }
 
       setSelectedCoupon(coupon);
-      onSuccess("쿠폰이 적용되었습니다.");
+      notify("쿠폰이 적용되었습니다.", "success");
     },
-    [onSuccess]
+    [selectedCoupon, notify]
   );
 
   return {

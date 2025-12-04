@@ -3,16 +3,14 @@ import { ProductWithUI } from "../types";
 import { initialProducts } from "../constants";
 import { useDebounce } from "../utils/hooks/useDebounce";
 import { useLocalStorage } from "../utils/hooks/useLocalStorage";
+import { useToast } from "../utils/hooks/useToast";
 
-export const useProduct = ({
-  onSuccess,
-}: {
-  onSuccess: (message: string) => void;
-}) => {
+export const useProduct = () => {
   const [products, setProducts] = useLocalStorage<ProductWithUI[]>(
     "products",
     initialProducts
   );
+  const { notify } = useToast();
 
   const addProduct = useCallback(
     (newProduct: Omit<ProductWithUI, "id">) => {
@@ -21,9 +19,9 @@ export const useProduct = ({
         id: `p${Date.now()}`,
       };
       setProducts((prev) => [...prev, product]);
-      onSuccess("상품이 추가되었습니다.");
+      notify("상품이 추가되었습니다.", "success");
     },
-    [onSuccess, setProducts]
+    [notify, setProducts]
   );
 
   const updateProduct = useCallback(
@@ -33,17 +31,17 @@ export const useProduct = ({
           product.id === productId ? { ...product, ...updates } : product
         )
       );
-      onSuccess("상품이 수정되었습니다.");
+      notify("상품이 수정되었습니다.", "success");
     },
-    [onSuccess, setProducts]
+    [notify, setProducts]
   );
 
   const deleteProduct = useCallback(
     (productId: string) => {
       setProducts((prev) => prev.filter((p) => p.id !== productId));
-      onSuccess("상품이 삭제되었습니다.");
+      notify("상품이 삭제되었습니다.", "success");
     },
-    [onSuccess, setProducts]
+    [notify, setProducts]
   );
 
   const [searchTerm, setSearchTerm] = useState("");

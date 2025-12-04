@@ -8,7 +8,6 @@ export function AdminPage({
   coupons,
   addCoupon,
   deleteCoupon,
-  notify,
   deleteProduct,
   updateProduct,
   addProduct,
@@ -17,7 +16,6 @@ export function AdminPage({
   coupons: Coupon[];
   addCoupon: (coupon: Coupon) => void;
   deleteCoupon: (code: string) => void;
-  notify: (message: string, type: "error" | "success" | "warning") => void;
   deleteProduct: (productId: string) => void;
   updateProduct: (productId: string, product: ProductForm) => void;
   addProduct: (product: ProductForm) => void;
@@ -63,14 +61,12 @@ export function AdminPage({
           deleteProduct={deleteProduct}
           updateProduct={updateProduct}
           addProduct={addProduct}
-          notify={notify}
         />
       ) : (
         <CouponDashboard
           coupons={coupons}
           addCoupon={addCoupon}
           deleteCoupon={deleteCoupon}
-          notify={notify}
         />
       )}
     </div>

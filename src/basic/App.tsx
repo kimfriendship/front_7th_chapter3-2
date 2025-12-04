@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 import { Header } from "./components/Header";
-import type { Notification } from "./types";
 import { AdminPage } from "./pages/AdminPage";
 import { CartPage } from "./pages/CartPage";
 import { Toast } from "./components/ui/Toast";
@@ -10,35 +9,14 @@ import { useCoupon } from "./hooks/useCoupon";
 import { CartCounter } from "./components/CartCounter";
 import { ProductSearchBar } from "./components/ProductSearchBar";
 import { Coupon } from "../types";
+import { useToast } from "./utils/hooks/useToast";
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-
-  const addNotification = useCallback(
-    (message: string, type: "error" | "success" | "warning" = "success") => {
-      const id = Date.now().toString();
-      setNotifications((prev) => [...prev, { id, message, type }]);
-
-      setTimeout(() => {
-        setNotifications((prev) => prev.filter((n) => n.id !== id));
-      }, 3000);
-    },
-    []
-  );
-
-  const notificationHandler = {
-    onSuccess: (message: string) => {
-      addNotification(message, "success");
-    },
-    onError: (message: string) => {
-      addNotification(message, "error");
-    },
-  };
+  const { notifications, notify } = useToast();
 
   const { cart, setCart, addToCart, removeFromCart, updateQuantity } =
-    useCart(notificationHandler);
+    useCart();
 
   const {
     products,
@@ -49,7 +27,7 @@ const App = () => {
     setSearchTerm,
     debouncedSearchTerm,
     filteredProducts,
-  } = useProduct(notificationHandler);
+  } = useProduct();
 
   const {
     coupons,
@@ -58,32 +36,23 @@ const App = () => {
     addCoupon,
     deleteCoupon,
     applyCoupon,
-  } = useCoupon(notificationHandler);
+  } = useCoupon();
 
   const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handlePurchase = useCallback(() => {
     const orderNumber = `ORD-${Date.now()}`;
-    addNotification(
-      `주문이 완료되었습니다. 주문번호: ${orderNumber}`,
-      "success"
-    );
+    notify(`주문이 완료되었습니다. 주문번호: ${orderNumber}`, "success");
     setCart([]);
     setSelectedCoupon(null);
-  }, [addNotification, setCart]);
+  }, [notify, setCart, setSelectedCoupon]);
 
   return (
     <div className="min-h-screen bg-gray-50">
       {notifications.length > 0 && (
         <div className="fixed top-20 right-4 z-50 space-y-2 max-w-sm">
           {notifications.map((notification) => (
-            <Toast
-              key={notification.id}
-              notification={notification}
-              setNotifications={(noti: Notification) =>
-                setNotifications((prev) => prev.filter((n) => n.id !== noti.id))
-              }
-            />
+            <Toast key={notification.id} notification={notification} />
           ))}
         </div>
       )}
@@ -113,7 +82,6 @@ const App = () => {
             coupons={coupons}
             addCoupon={addCoupon}
             deleteCoupon={deleteCoupon}
-            notify={addNotification}
             deleteProduct={deleteProduct}
             updateProduct={updateProduct}
             addProduct={addProduct}

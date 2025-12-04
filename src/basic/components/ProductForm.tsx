@@ -2,22 +2,22 @@ import { IconClose } from "./icons";
 import { ProductForm as ProductFormType } from "../types";
 import { isValidNumber } from "../utils/isValidNumber";
 import { toNumber } from "../utils/toNumber";
+import { useToast } from "../utils/hooks/useToast";
 
 export function ProductForm({
   onSubmit,
   editingProduct,
   productForm,
   onChange,
-  notify,
   onCancel,
 }: {
   onSubmit: (e: React.FormEvent) => void;
   editingProduct: string | null;
   productForm: ProductFormType;
   onChange: (product: ProductFormType) => void;
-  notify: (message: string, type: "error" | "success" | "warning") => void;
   onCancel: () => void;
 }) {
+  const { notify } = useToast();
   const isNewProduct = editingProduct === "new";
 
   return (

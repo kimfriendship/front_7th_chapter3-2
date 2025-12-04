@@ -17,12 +17,10 @@ export function CouponDashboard({
   coupons,
   addCoupon,
   deleteCoupon,
-  notify,
 }: {
   coupons: Coupon[];
   addCoupon: (coupon: Coupon) => void;
   deleteCoupon: (code: string) => void;
-  notify: (message: string, type: "error" | "success" | "warning") => void;
 }) {
   const [showCouponForm, setShowCouponForm] = useState(false);
   const [couponForm, setCouponForm] = useState(getInitialCouponForm());
@@ -66,7 +64,6 @@ export function CouponDashboard({
             onSubmit={handleSubmit}
             onChange={setCouponForm}
             onCancel={setShowCouponForm}
-            notify={notify}
           />
         )}
       </div>

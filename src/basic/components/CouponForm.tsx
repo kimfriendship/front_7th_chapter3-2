@@ -2,10 +2,10 @@ import { validateCoupon } from "../models/validateCoupon";
 import { Coupon } from "../types";
 import { isValidNumber } from "../utils/isValidNumber";
 import { toNumber } from "../utils/toNumber";
+import { useToast } from "../utils/hooks/useToast";
 
 export function CouponForm({
   couponForm,
-  notify,
   onChange,
   onCancel,
   onSubmit,
@@ -14,8 +14,8 @@ export function CouponForm({
   couponForm: Coupon;
   onChange: (couponForm: Coupon) => void;
   onCancel: (show: boolean) => void;
-  notify: (message: string, type: "error" | "success" | "warning") => void;
 }) {
+  const { notify } = useToast();
   const handleDiscountBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const value = toNumber(e.target.value);
     const error = validateCoupon(couponForm.discountType, value);

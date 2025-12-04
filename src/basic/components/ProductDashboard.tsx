@@ -14,13 +14,11 @@ export const getInitialProductForm = (): ProductFormType => ({
 export function ProductDashboard({
   products,
   deleteProduct,
-  notify,
   updateProduct,
   addProduct,
 }: {
   products: ProductWithUI[];
   deleteProduct: (productId: string) => void;
-  notify: (message: string, type: "error" | "success" | "warning") => void;
   updateProduct: (productId: string, product: ProductFormType) => void;
   addProduct: (product: ProductFormType) => void;
 }) {
@@ -93,7 +91,6 @@ export function ProductDashboard({
           onSubmit={handleSubmit}
           onChange={setProductForm}
           onCancel={handleCancel}
-          notify={notify}
         />
       )}
     </section>

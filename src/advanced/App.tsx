@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { Header } from "./components/Header";
 import { AdminPage } from "./pages/AdminPage";
 import { CartPage } from "./pages/CartPage";
@@ -6,25 +6,13 @@ import { Toast } from "./components/ui/Toast";
 import { CartCounter } from "./components/CartCounter";
 import { ProductSearchBar } from "./components/ProductSearchBar";
 import { useToast } from "./utils/hooks/useToast";
-import {
-  isAdminAtom,
-  searchTermAtom,
-  totalItemCountAtom,
-  purchaseAtom,
-} from "./store";
+import { isAdminAtom, searchTermAtom, totalItemCountAtom } from "./store";
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useAtom(isAdminAtom);
   const [searchTerm, setSearchTerm] = useAtom(searchTermAtom);
   const totalItemCount = useAtomValue(totalItemCountAtom);
-  const purchase = useSetAtom(purchaseAtom);
-  const { notifications, notify } = useToast();
-
-  const handlePurchase = () => {
-    const orderNumber = `ORD-${Date.now()}`;
-    notify(`주문이 완료되었습니다. 주문번호: ${orderNumber}`, "success");
-    purchase();
-  };
+  const { notifications } = useToast();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -55,7 +43,7 @@ const App = () => {
       </Header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {isAdmin ? <AdminPage /> : <CartPage onPurchase={handlePurchase} />}
+        {isAdmin ? <AdminPage /> : <CartPage />}
       </main>
     </div>
   );

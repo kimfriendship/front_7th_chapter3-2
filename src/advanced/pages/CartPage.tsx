@@ -22,9 +22,10 @@ import {
   removeFromCartAtom,
   updateQuantityAtom,
   applyCouponAtom,
+  purchaseAtom,
 } from "../store";
 
-export function CartPage({ onPurchase }: { onPurchase: () => void }) {
+export function CartPage() {
   const products = useAtomValue(productsAtom);
   const searchTerm = useAtomValue(searchTermAtom);
   // 초기 렌더링에서는 즉시 반환, 이후 변경사항만 debounce
@@ -37,7 +38,14 @@ export function CartPage({ onPurchase }: { onPurchase: () => void }) {
   const removeFromCartAction = useSetAtom(removeFromCartAtom);
   const updateQuantityAction = useSetAtom(updateQuantityAtom);
   const applyCouponAction = useSetAtom(applyCouponAtom);
+  const purchase = useSetAtom(purchaseAtom);
   const { notify } = useToast();
+
+  const handlePurchase = useCallback(() => {
+    const orderNumber = `ORD-${Date.now()}`;
+    notify(`주문이 완료되었습니다. 주문번호: ${orderNumber}`, "success");
+    purchase();
+  }, [notify, purchase]);
 
   const handleAddToCart = useCallback(
     (product: (typeof products)[0]) => {
@@ -198,7 +206,7 @@ export function CartPage({ onPurchase }: { onPurchase: () => void }) {
               />
               <CartPayment
                 totals={calculateCartTotal(cart, selectedCoupon)}
-                onPurchase={onPurchase}
+                onPurchase={handlePurchase}
               />
             </>
           )}
